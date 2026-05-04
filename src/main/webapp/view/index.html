@@ -1,0 +1,111 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+
+#include("common/header.html")
+<main>
+    <div class="hero">
+        <div class="container">
+            <h1 class="hero-title">奥利顶</h1>
+            <p class="hero-slogan">一起编程玩游戏</p>
+            <div class="hero-tags">
+                <span>🎮 游戏逆向</span>
+                <span>🛡️ 反外挂</span>
+                <span>💻 技术分享</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-wrap">
+            <!-- 左侧：文章列表 -->
+            <div class="articles">
+                #for(article : articlePage.getList())
+                <article class="article-item">
+                    <h2 class="article-title">
+                        <a href="#(ctx)/article/#(article.SLUG)">#(article.TITLE)</a>
+                    </h2>
+                    <div class="article-meta">
+                        <span>📅 #date(article.CREATE_TIME, "yyyy-MM-dd")</span>
+                        <span>📁 
+                            #if(article.CATEGORY_NAME)
+                            <a href="#(ctx)/c/#(article.CATEGORY_SLUG)">#(article.CATEGORY_NAME)</a>
+                            #else
+                            未分类
+                            #end
+                        </span>
+                        <span>👁 #(article.VIEW_COUNT) 次阅读</span>
+                    </div>
+                    #if(article.SUMMARY)
+                    <div class="article-summary">#(article.SUMMARY)</div>
+                    #end
+                    <a href="#(ctx)/article/#(article.SLUG)" class="read-more">阅读全文 →</a>
+                </article>
+                #end
+
+                #if(articlePage.getTotalPage() > 1)
+                <div class="pagination">
+                    #if(articlePage.getPageNumber() > 1)
+                    <a href="?page=#(articlePage.getPageNumber()-1)">上一页</a>
+                    #end
+                    <span class="current">#(articlePage.getPageNumber()) / #(articlePage.getTotalPage())</span>
+                    #if(articlePage.getPageNumber() < articlePage.getTotalPage())
+                    <a href="?page=#(articlePage.getPageNumber()+1)">下一页</a>
+                    #end
+                </div>
+                #end
+            </div>
+
+            <!-- 右侧：侧边栏 -->
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3>📱 微信公众号</h3>
+                    <div class="wechat-icons">
+                        <a href="javascript:void(0)" onclick="showQRCode('bytecode')" class="wechat-link">
+                            <span>🔧</span> 会编码
+                        </a>
+                        <a href="javascript:void(0)" onclick="showQRCode('xiamixiake')" class="wechat-link">
+                            <span>🎮</span> 虾米虾壳
+                        </a>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>🔍 搜索</h3>
+                    <form action="#(ctx)/" method="get" class="search-form">
+                        <input type="text" name="keyword" placeholder="搜索文章..." value="#(keyword ?? '')">
+                        <button type="submit">搜索</button>
+                    </form>
+                </div>
+
+                <div class="widget">
+                    <h3>📂 分类</h3>
+                    <ul class="category-list">
+                        #for(cate : categories)
+                        <li>
+                            <a href="#(ctx)/c/#(cate.SLUG)">#(cate.NAME)</a>
+                            <span class="count">(#(cate.ARTICLE_COUNT ?? 0))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3>🔥 热门文章</h3>
+                    <ul class="hot-list">
+                        #for(item : hotArticles)
+                        <li>
+                            <a href="#(ctx)/article/#(item.SLUG)">#(item.TITLE)</a>
+                            <span class="views">(#(item.VIEW_COUNT))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</main>
+
+#include("common/footer.html")
+

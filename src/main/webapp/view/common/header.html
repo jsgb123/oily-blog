@@ -1,0 +1,41 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="keywords" content="#(seo_keywords ?? '技术博客,Java,Python,Rust,游戏逆向,前端开发,编程')">
+        <meta name="description" content="#(seo_description ?? '奥利顶 Oily Blog - 分享编程技术、游戏攻防、游戏逆向、反外挂研究的个人博客')">
+
+        <meta name="author" content="奥利顶">
+        <meta name="copyright" content="奥利顶">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow">
+
+        <link rel="shortcut icon" href="#(ctx)/assets/imgs/favicon.ico">
+
+        <title>#(seo_title ?? '奥利顶 Oily Blog - 编程技术 | 游戏逆向 | 反外挂 | 游戏防护 | 游戏引擎')</title>
+        <link rel="stylesheet" href="#(ctx)/assets/css/style.css">
+    </head>
+    <body>
+        <header class="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="#(ctx)/">
+                        <img src="#(ctx)/assets/imgs/logo.png" alt="奥利顶" class="logo-img" >
+                        <span>奥利顶</span>
+                        <small>oily.top</small>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="#(ctx)/">首页</a>
+                    #for(cate : categories)
+                    <a href="#(ctx)/c/#(cate.SLUG)">#(cate.NAME)</a>
+                    #end
+                </nav>
+            </div>
+        </header>

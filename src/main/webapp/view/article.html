@@ -1,0 +1,116 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+
+    <link rel="stylesheet" href="#(ctx)/assets/css/article.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+
+#include("common/header.html")
+
+<main>
+    <div class="container">
+        <div class="content-wrap">
+            <!-- 左侧：文章详情 -->
+            <div class="article-detail">
+                <h1 class="detail-title">#(article.TITLE)</h1>
+                <div class="detail-meta">
+                    <span>📅 #date(article.CREATE_TIME, "yyyy-MM-dd")</span>
+                    <span>📁 
+                        #if(category)
+                        <a href="#(ctx)/c/#(category.SLUG)">#(category.NAME)</a>
+                        #else
+                        未分类
+                        #end
+                    </span>
+                    <span>👁 #(article.VIEW_COUNT) 次阅读</span>
+                </div>
+
+                #if(article.TAGS)
+                <div class="detail-tags">
+                    #for(tag : article.TAGS.split(','))
+                    <a href="#(ctx)/t/#(tag.trim())">#(tag.trim())</a>
+                    #end
+                </div>
+                #end
+
+                <div class="detail-content">
+                    #(article.CONTENT_HTML ?? article.CONTENT)
+                </div>
+
+                <div class="detail-nav">
+                    #if(prevArticle)
+                    <a href="#(ctx)/article/#(prevArticle.SLUG)" class="nav-prev">← #(prevArticle.TITLE)</a>
+                    #else
+                    <span></span>
+                    #end
+                    #if(nextArticle)
+                    <a href="#(ctx)/article/#(nextArticle.SLUG)" class="nav-next">#(nextArticle.TITLE) →</a>
+                    #end
+                </div>
+
+                #if(relatedArticles && relatedArticles.size() > 0)
+                <div class="detail-related">
+                    <h3>📖 相关文章</h3>
+                    <div class="related-list">
+                        #for(related : relatedArticles)
+                        <a href="#(ctx)/article/#(related.SLUG)">#(related.TITLE)</a>
+                        #end
+                    </div>
+                </div>
+                #end
+            </div>
+
+            <!-- 右侧：侧边栏 -->
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3>📱 微信公众号</h3>
+                    <div class="wechat-icons">
+                        <a href="javascript:void(0)" onclick="showQRCode('bytecode')" class="wechat-link">
+                            <span>🔧</span> 会编码
+                        </a>
+                        <a href="javascript:void(0)" onclick="showQRCode('xiamixiake')" class="wechat-link">
+                            <span>🎮</span> 虾米虾壳
+                        </a>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>🔍 搜索</h3>
+                    <form action="#(ctx)/" method="get" class="search-form">
+                        <input type="text" name="keyword" placeholder="搜索文章...">
+                        <button type="submit">搜索</button>
+                    </form>
+                </div>
+
+                <div class="widget">
+                    <h3>📂 分类</h3>
+                    <ul class="category-list">
+                        #for(cate : categories)
+                        <li>
+                            <a href="#(ctx)/c/#(cate.SLUG)">#(cate.NAME)</a>
+                            <span class="count">(#(cate.ARTICLE_COUNT ?? 0))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+
+                <div class="widget">
+                    <h3>🔥 热门文章</h3>
+                    <ul class="hot-list">
+                        #for(item : hotArticles)
+                        <li>
+                            <a href="#(ctx)/article/#(item.SLUG)">#(item.TITLE)</a>
+                            <span class="views">(#(item.VIEW_COUNT))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+#include("common/footer.html")

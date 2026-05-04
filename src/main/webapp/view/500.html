@@ -1,0 +1,87 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="keywords" content="#(seo_keywords ?? '技术博客,Java,Python,Rust,游戏逆向,前端开发,编程')">
+        <meta name="description" content="#(seo_description ?? '奥利顶 Oily Blog - 分享编程技术、游戏攻防、游戏逆向、反外挂研究的个人博客')">
+
+        <meta name="author" content="奥利顶">
+        <meta name="copyright" content="奥利顶">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow">
+
+        <link rel="shortcut icon" href="#(ctx)/assets/imgs/favicon.ico">
+
+        <title>500 | #(seo_title ?? '奥利顶 Oily Blog - 编程技术 | 游戏逆向 | 反外挂 | 游戏防护 | 游戏引擎')</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .error-container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .error-message {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .home-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #fff;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .home-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">500</div>
+        <div class="error-title">服务器内部错误</div>
+        <div class="error-message">抱歉，服务器遇到了错误，无法完成您的请求</div>
+        <a href="/oily-blog/" class="home-link">返回首页</a>
+    </div>
+</body>
+</html>

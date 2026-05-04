@@ -1,0 +1,70 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+#include("../common/admin_header.html")
+#include("../common/admin_footer.html")
+#set(title="控制台",menu= "index")
+#@adminHeader()
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">📄</div>
+        <div class="stat-info">
+            <h3>#(articleCount ?? 0)</h3>
+            <p>文章总数</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">👁️</div>
+        <div class="stat-info">
+            <h3>#(totalViews ?? 0)</h3>
+            <p>总浏览量</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-info">
+            <h3>#(todayCount ?? 0)</h3>
+            <p>今日发布</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">📁</div>
+        <div class="stat-info">
+            <h3>#(categoryCount ?? 0)</h3>
+            <p>分类数量</p>
+        </div>
+    </div>
+</div>
+
+<div class="recent-section">
+    <h2>最近文章</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>分类</th>
+                <th>浏览量</th>
+                <th>发布日期</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            #for(article : recentArticles)
+            <tr>
+                <td><a href="#(ctx)/article/#(article.SLUG)" target="_blank">#(article.TITLE)</a></td>
+                <td>#(article.CATEGORY_NAME ?? '未分类')</td>
+                <td>#(article.VIEW_COUNT)</td>
+                <td>#date(article.CREATE_TIME, "yyyy-MM-dd")</td>
+                <td>#if(article.STATUS == 1) <span class="status-published">已发布</span> #else <span class="status-draft">草稿</span> #end</td>
+                <td>
+                    <a href="#(ctx)/admin/edit/#(article.ID)" class="btn-edit">编辑</a>
+                    <a href="javascript:void(0)" onclick="confirmDelete('#(ctx)/admin/delete/#(article.ID)', '确定删除这篇文章吗？')" class="btn-delete">删除</a>
+                </td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+</div>
+#@adminFooter()

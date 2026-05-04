@@ -1,0 +1,383 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+<style>
+    .category-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .category-form h3 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-inline {
+        display: flex;
+        gap: 15px;
+        align-items: flex-end;
+    }
+
+    .form-inline .form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .form-inline .form-group label {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .category-table {
+        width: 100%;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .category-table th,
+    .category-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .category-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #555;
+    }
+
+    .category-table tr:hover {
+        background: #f8f9fa;
+    }
+
+    .edit-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .edit-form input {
+        padding: 6px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 150px;
+    }
+
+    .edit-form input:first-child {
+        width: 120px;
+    }
+
+    .btn-save {
+        background: #48bb78;
+        color: #fff;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-cancel-edit {
+        background: #e2e8f0;
+        color: #333;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-edit-cate {
+        color: #667eea;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .btn-delete-cate {
+        color: #e53e3e;
+        cursor: pointer;
+    }
+
+    .btn-add {
+        background: #667eea;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .sort-input {
+        width: 60px;
+        text-align: center;
+    }
+
+    .slug-preview {
+        font-size: 12px;
+        color: #999;
+        margin-top: 5px;
+    }
+</style>
+#include("../common/admin_header.html")
+#include("../common/admin_footer.html")
+#set(title="分类管理",menu= "categories")
+#@adminHeader()
+<!-- 添加分类表单 -->
+<div class="category-form">
+    <h3>添加新分类</h3>
+    <form id="addCategoryForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label>分类名称 *</label>
+                <input type="text" id="cate_name" name="name" placeholder="例如：技术分享" required>
+            </div>
+            <div class="form-group">
+                <label>URL别名 (slug)</label>
+                <input type="text" id="cate_slug" name="slug" placeholder="自动生成，可留空">
+                <div class="slug-preview">用于URL：#(ctx)/c/<span id="slugPreview">...</span></div>
+            </div>
+            <div class="form-group">
+                <label>排序 (数字越小越靠前)</label>
+                <input type="number" id="cate_sort" name="sort" value="0" class="sort-input">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>描述</label>
+            <input id="cate_description" name="description"   placeholder="分类描述...">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-add">添加分类</button>
+        </div>
+    </form>
+</div>
+
+<!-- 分类列表 -->
+<table class="category-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>别名(slug)</th>
+            <th>描述</th>
+            <th>排序</th>
+            <th>文章数</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        #for(cate : categories)
+        <tr id="row-#(cate.ID)">
+            <td>#(cate.ID)</td>
+            <td>
+                <span class="cate-name-#(cate.ID)">#(cate.NAME)</span>
+                <input type="text" class="edit-name-#(cate.ID)" style="display:none;" value="#(cate.NAME)">
+            </td>
+            <td>
+                <span class="cate-slug-#(cate.ID)">#(cate.SLUG)</span>
+                <input type="text" class="edit-slug-#(cate.ID)" style="display:none;" value="#(cate.SLUG)">
+            </td>
+            <td>
+                <span class="cate-desc-#(cate.ID)">#(cate.DESCRIPTION ?? '')</span>
+                <input type="text" class="edit-desc-#(cate.ID)" style="display:none;" value="#(cate.DESCRIPTION ?? '')">
+            </td>
+            <td>
+                <span class="cate-sort-#(cate.ID)">#(cate.SORT)</span>
+                <input type="number" class="edit-sort-#(cate.ID)" style="display:none;" value="#(cate.SORT)">
+            </td>
+            <td>#(cate.ARTICLE_COUNT ?? 0)</td>
+            <td>
+                <a href="javascript:void(0)" onclick="editCategory(#(cate.ID))" class="btn-edit-cate">编辑</a>
+                <a href="javascript:void(0)" onclick="saveCategory(#(cate.ID))" class="btn-save" id="save-#(cate.ID)" style="display:none;">保存</a>
+                <a href="javascript:void(0)" onclick="cancelEdit(#(cate.ID))" class="btn-cancel-edit" id="cancel-#(cate.ID)" style="display:none;">取消</a>
+                <a href="javascript:void(0)" onclick="deleteCategory(#(cate.ID))" class="btn-delete-cate">删除</a>
+            </td>
+        </tr>
+        #end
+        #if(categories == null || categories.isEmpty())
+        <tr>
+            <td colspan="7" style="text-align: center;">暂无分类，请添加</td>
+        </tr>
+        #end
+    </tbody>
+</table>
+#@adminFooter()
+
+<script>
+    // 自动生成slug
+    document.getElementById('cate_name').addEventListener('input', function() {
+    let slug = this.value.toLowerCase()
+            .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+            .replace(/^-|-$/g, '');
+    document.getElementById('cate_slug').value = slug;
+    document.getElementById('slugPreview').innerText = slug || '...';
+    });
+    // 添加分类
+    document.getElementById('addCategoryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let name = document.getElementById('cate_name').value;
+    if (!name) {
+    showMsg('请输入分类名称', 'warning');
+    return;
+    }
+
+    let slug = document.getElementById('cate_slug').value;
+    let description = document.getElementById('cate_description').value;
+    let sort = document.getElementById('cate_sort').value;
+    // 使用 URLSearchParams 更规范
+    let params = new URLSearchParams();
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('description', description);
+    params.append('sort', sort);
+    fetch('#(ctx)/admin/addCategory', {
+    method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: params.toString()
+    })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+            showMsg('添加成功', 'success');
+            setTimeout(() => {
+            window.location.reload();
+            }, 1000);
+            } else {
+            showMsg('添加失败', 'error');
+            }
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            showMsg('请求失败', 'error');
+            });
+    });
+    // 编辑分类
+    function editCategory(id) {
+    // 隐藏显示文本，显示输入框
+    let nameSpan = document.querySelector('.cate-name-' + id);
+    let slugSpan = document.querySelector('.cate-slug-' + id);
+    let descSpan = document.querySelector('.cate-desc-' + id);
+    let sortSpan = document.querySelector('.cate-sort-' + id);
+    let nameInput = document.querySelector('.edit-name-' + id);
+    let slugInput = document.querySelector('.edit-slug-' + id);
+    let descInput = document.querySelector('.edit-desc-' + id);
+    let sortInput = document.querySelector('.edit-sort-' + id);
+    if (nameSpan) nameSpan.style.display = 'none';
+    if (slugSpan) slugSpan.style.display = 'none';
+    if (descSpan) descSpan.style.display = 'none';
+    if (sortSpan) sortSpan.style.display = 'none';
+    if (nameInput) nameInput.style.display = 'inline-block';
+    if (slugInput) slugInput.style.display = 'inline-block';
+    if (descInput) descInput.style.display = 'inline-block';
+    if (sortInput) sortInput.style.display = 'inline-block';
+    // 显示保存/取消按钮，隐藏编辑/删除按钮
+    let saveBtn = document.getElementById('save-' + id);
+    let cancelBtn = document.getElementById('cancel-' + id);
+    if (saveBtn) saveBtn.style.display = 'inline-block';
+    if (cancelBtn) cancelBtn.style.display = 'inline-block';
+    let row = document.querySelector('.cate-name-' + id)?.parentElement?.parentElement;
+    if (row) {
+    let editBtn = row.querySelector('.btn-edit-cate');
+    let deleteBtn = row.querySelector('.btn-delete-cate');
+    if (editBtn) editBtn.style.display = 'none';
+    if (deleteBtn) deleteBtn.style.display = 'none';
+    }
+    }
+
+    // 取消编辑
+    function cancelEdit(id) {
+    // 恢复显示
+    let nameSpan = document.querySelector('.cate-name-' + id);
+    let slugSpan = document.querySelector('.cate-slug-' + id);
+    let descSpan = document.querySelector('.cate-desc-' + id);
+    let sortSpan = document.querySelector('.cate-sort-' + id);
+    let nameInput = document.querySelector('.edit-name-' + id);
+    let slugInput = document.querySelector('.edit-slug-' + id);
+    let descInput = document.querySelector('.edit-desc-' + id);
+    let sortInput = document.querySelector('.edit-sort-' + id);
+    if (nameSpan) nameSpan.style.display = 'inline-block';
+    if (slugSpan) slugSpan.style.display = 'inline-block';
+    if (descSpan) descSpan.style.display = 'inline-block';
+    if (sortSpan) sortSpan.style.display = 'inline-block';
+    if (nameInput) nameInput.style.display = 'none';
+    if (slugInput) slugInput.style.display = 'none';
+    if (descInput) descInput.style.display = 'none';
+    if (sortInput) sortInput.style.display = 'none';
+    let saveBtn = document.getElementById('save-' + id);
+    let cancelBtn = document.getElementById('cancel-' + id);
+    if (saveBtn) saveBtn.style.display = 'none';
+    if (cancelBtn) cancelBtn.style.display = 'none';
+    let row = document.querySelector('.cate-name-' + id)?.parentElement?.parentElement;
+    if (row) {
+    let editBtn = row.querySelector('.btn-edit-cate');
+    let deleteBtn = row.querySelector('.btn-delete-cate');
+    if (editBtn) editBtn.style.display = 'inline-block';
+    if (deleteBtn) deleteBtn.style.display = 'inline-block';
+    }
+    }
+
+    // 保存分类
+    function saveCategory(id) {
+    let nameInput = document.querySelector('.edit-name-' + id);
+    let slugInput = document.querySelector('.edit-slug-' + id);
+    let descInput = document.querySelector('.edit-desc-' + id);
+    let sortInput = document.querySelector('.edit-sort-' + id);
+    if (!nameInput) {
+    showMsg('找不到编辑元素', 'warning');
+    return;
+    }
+
+    let name = nameInput.value;
+    let slug = slugInput ? slugInput.value : '';
+    let description = descInput ? descInput.value : '';
+    let sort = sortInput ? sortInput.value : 0;
+    if (!name) {
+    showMsg('分类名称不能为空', 'warning');
+    return;
+    }
+
+    let params = new URLSearchParams();
+    params.append('id', id);
+    params.append('name', name);
+    params.append('slug', slug);
+    params.append('description', description);
+    params.append('sort', sort);
+    fetch('#(ctx)/admin/updateCategory', {
+    method: 'POST',
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: params.toString()
+    })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+            showMsg('保存成功', 'success');
+            setTimeout(() => {
+            window.location.reload();
+            }, 1000);
+            } else {
+            showMsg('保存失败', 'error');
+            }
+            })
+            .catch(error => {
+            console.error('Error:', error);
+            showMsg('请求失败', 'error');
+            });
+    }
+
+    // 删除分类
+    function deleteCategory(id) {
+    if (confirm('确定要删除这个分类吗？该分类下的文章将被移到未分类。')) {
+    window.location.href = '#(ctx)/admin/deleteCategory/' + id;
+    }
+    }
+</script>
+</body>
+</html>

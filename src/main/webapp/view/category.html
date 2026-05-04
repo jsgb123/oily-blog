@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="#(category.NAME ?? '')">
+    <meta name="description" content="#(category.DESCRIPTION ?? '')">
+    <title>#(category.NAME) - 奥利顶</title>
+    <link rel="stylesheet" href="#(ctx)/assets/css/style.css">
+    <style>
+        /* 分类页头部 */
+.category-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 50px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.category-header h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.category-header p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* 空状态 */
+.empty-message {
+    background: #fff;
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 12px;
+    color: #999;
+}
+
+.empty-message p:first-child {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+/* 导航激活状态 */
+.nav a.active {
+    color: #2563eb;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .category-header {
+        padding: 30px 0;
+    }
+    .category-header h1 {
+        font-size: 24px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="#(ctx)/">
+                    <img src="#(ctx)/assets/imgs/logo.png" alt="奥利顶" class="logo-img">
+                    <span>奥利顶</span>
+                    <small>oily.top</small>
+                </a>
+            </div>
+            <nav class="nav">
+                <a href="#(ctx)/">首页</a>
+                #for(cate : categories)
+                <a href="#(ctx)/c/#(cate.SLUG)" class="#(cate.ID == category.ID ? 'active' : '')">#(cate.NAME)</a>
+                #end
+                <a href="#(ctx)/admin/login">后台</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="category-header">
+            <div class="container">
+                <h1>#(category.NAME)</h1>
+                #if(category.DESCRIPTION)
+                <p>#(category.DESCRIPTION)</p>
+                #end
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="content-wrap">
+                <div class="articles">
+                    #if(articlePage.getList() && articlePage.getList().size() > 0)
+                        #for(article : articlePage.getList())
+                        <article class="article-item">
+                            <h2 class="article-title">
+                                <a href="#(ctx)/article/#(article.SLUG)">#(article.TITLE)</a>
+                            </h2>
+                            <div class="article-meta">
+                                <span>📅 #date(article.CREATE_TIME, "yyyy-MM-dd")</span>
+                                <span>📁 #(category.NAME)</span>
+                                <span>👁 #(article.VIEW_COUNT) 次阅读</span>
+                            </div>
+                            #if(article.SUMMARY)
+                            <div class="article-summary">#(article.SUMMARY)</div>
+                            #end
+                            <a href="#(ctx)/article/#(article.SLUG)" class="read-more">阅读全文 →</a>
+                        </article>
+                        #end
+
+                        #if(articlePage.getTotalPage() > 1)
+                        <div class="pagination">
+                            #if(articlePage.getPageNumber() > 1)
+                            <a href="?page=#(articlePage.getPageNumber()-1)">上一页</a>
+                            #end
+                            <span class="current">#(articlePage.getPageNumber()) / #(articlePage.getTotalPage())</span>
+                            #if(articlePage.getPageNumber() < articlePage.getTotalPage())
+                            <a href="?page=#(articlePage.getPageNumber()+1)">下一页</a>
+                            #end
+                        </div>
+                        #end
+                    #else
+                    <div class="empty-message">
+                        <p>📭 暂无文章</p>
+                        <p>该分类下还没有文章，敬请期待！</p>
+                    </div>
+                    #end
+                </div>
+
+                <aside class="sidebar">
+                    <div class="widget">
+                    <h3>📱 微信公众号</h3>
+                    <div class="wechat-icons">
+                        <a href="javascript:void(0)" onclick="showQRCode('bytecode')" class="wechat-link">
+                            <span>🔧</span> 会编码
+                        </a>
+                        <a href="javascript:void(0)" onclick="showQRCode('xiamixiake')" class="wechat-link">
+                            <span>🎮</span> 虾米虾壳
+                        </a>
+                    </div>
+                </div>
+                    <div class="widget">
+                        <h3>🔍 搜索</h3>
+                        <form action="#(ctx)/" method="get" class="search-form">
+                            <input type="text" name="keyword" placeholder="搜索文章...">
+                            <button type="submit">搜索</button>
+                        </form>
+                    </div>
+
+                    <div class="widget">
+                        <h3>📂 全部分类</h3>
+                        <ul class="category-list">
+                            #for(cate : categories)
+                            <li>
+                                <a href="#(ctx)/c/#(cate.SLUG)">#(cate.NAME)</a>
+                                <span class="count">(#(cate.ARTICLE_COUNT ?? 0))</span>
+                            </li>
+                            #end
+                        </ul>
+                    </div>
+
+                    <div class="widget">
+                        <h3>🔥 热门文章</h3>
+                        <ul class="hot-list">
+                            #for(article : hotArticles)
+                            <li>
+                                <a href="#(ctx)/article/#(article.SLUG)">#(article.TITLE)</a>
+                                <span class="views">(#(article.VIEW_COUNT))</span>
+                            </li>
+                            #end
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 奥利顶 | Powered by JFinal | Developed by <a href="https://www.oily.top" target="_blank">奥利顶</a></p>
+        </div>
+    </footer>
+</body>
+</html>

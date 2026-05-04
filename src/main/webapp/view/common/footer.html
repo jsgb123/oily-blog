@@ -1,0 +1,87 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>© #(currentYear ?? 2026) Oily Blog Powered by JFinal</p>
+                <p>Developed by <a href="http://www.oily.top" target="_blank" rel="noopener noreferrer">奥利顶 (www.oily.top)</a></p>
+                <p>
+                    <a href="https://beian.miit.gov.cn/" target="_blank" style="color:#999;">
+                        桂ICP备20002332号-3
+                    </a>
+                </p>
+            </div>
+            <div class="footer-qrcode">
+                <div class="qrcode-item">
+                    <img src="#(ctx)/assets/imgs/qrcode_for_bytecode.jpg" alt="微信公众号【会编码】">
+                    <span>关注微信公众号<br>【会编码】获得更多游戏编程技术</span>
+                </div>
+                <div class="qrcode-item">
+                    <img src="#(ctx)/assets/imgs/qrcode_for_xiamixiake.jpg" alt="微信公众号【虾米虾壳】">
+                    <span>关注微信公众号<br>【虾米虾壳】获得更多游戏逆向技术</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function showQRCode(type) {
+        // 移除已存在的弹窗
+        var existingModal = document.querySelector('.qrcode-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // 二维码图片配置
+        var qrcodeConfig = {
+            'bytecode': {
+                img: '#(ctx)/assets/imgs/qrcode_for_bytecode.jpg',
+                title: '微信公众号【会编码】',
+                desc: '关注获得更多游戏编程技术'
+            },
+            'xiamixiake': {
+                img: '#(ctx)/assets/imgs/qrcode_for_xiamixiake.jpg',
+                title: '微信公众号【虾米虾壳】',
+                desc: '关注获得更多游戏逆向技术'
+            }
+        };
+
+        var config = qrcodeConfig[type];
+        if (!config)
+            return;
+
+        // 创建弹窗
+        var modal = document.createElement('div');
+        modal.className = 'qrcode-modal';
+        modal.innerHTML = `
+        <div class="qrcode-modal-content">
+            <span class="qrcode-close">&times;</span>
+            <div class="qrcode-modal-img">
+                <img src="${config.img}" alt="${config.title}">
+            </div>
+            <h4>${config.title}</h4>
+            <p>${config.desc}</p>
+        </div>
+    `;
+
+        document.body.appendChild(modal);
+
+        // 关闭按钮
+        modal.querySelector('.qrcode-close').onclick = function () {
+            modal.remove();
+        };
+
+        // 点击背景关闭
+        modal.onclick = function (e) {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        };
+    }
+</script>
+</body>
+</html>

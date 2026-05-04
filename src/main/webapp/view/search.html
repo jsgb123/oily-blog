@@ -1,0 +1,103 @@
+<!-- 
+Created on : 2026-5-4
+Author     : 奥利顶<oily.top>
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="#(seo_keywords)">
+    <meta name="description" content="#(seo_description)">
+    <title>#(seo_title)</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    #@header()
+    
+    <main class="container">
+        <div class="content-wrap">
+            <div class="articles">
+                <div class="search-header">
+                    <h2>搜索关键词："#(keyword)"</h2>
+                    <p>共找到 #(articlePage.getTotalRow()) 篇文章</p>
+                </div>
+                
+                #for(article : articlePage.getList())
+                <article class="article-item">
+                    <h2 class="article-title">
+                        <a href="/article/#(article.slug)">#(article.title)</a>
+                    </h2>
+                    <div class="article-meta">
+                        <span>📅 #date(article.create_time, "yyyy-MM-dd")</span>
+                        <span>📁 <a href="/c/#(article.category_slug)">#(article.category_name)</a></span>
+                        <span>👁 #(article.view_count) 次阅读</span>
+                    </div>
+                    <div class="article-summary">
+                        #(article.summary)
+                    </div>
+                    <a href="/article/#(article.slug)" class="read-more">阅读全文 →</a>
+                </article>
+                #end
+                
+                <!-- 分页 -->
+                #if(articlePage.getTotalPage() > 1)
+                <div class="pagination">
+                    #if(articlePage.getPageNumber() > 1)
+                    <a href="?keyword=#(keyword)&page=#(articlePage.getPageNumber()-1)">上一页</a>
+                    #end
+                    
+                    #for(i : [1..articlePage.getTotalPage()])
+                        #if(i == articlePage.getPageNumber())
+                        <span class="current">#(i)</span>
+                        #else
+                        <a href="?keyword=#(keyword)&page=#(i)">#(i)</a>
+                        #end
+                    #end
+                    
+                    #if(articlePage.getPageNumber() < articlePage.getTotalPage())
+                    <a href="?keyword=#(keyword)&page=#(articlePage.getPageNumber()+1)">下一页</a>
+                    #end
+                </div>
+                #end
+            </div>
+            
+            <aside class="sidebar">
+                <div class="widget">
+                    <h3>🔍 搜索</h3>
+                    <form action="/search" method="get" class="search-form">
+                        <input type="text" name="keyword" placeholder="搜索文章..." value="#(keyword)">
+                        <button type="submit">搜索</button>
+                    </form>
+                </div>
+                
+                <div class="widget">
+                    <h3>📂 分类</h3>
+                    <ul class="category-list">
+                        #for(cate : categories)
+                        <li>
+                            <a href="/c/#(cate.slug)">#(cate.name)</a>
+                            <span class="count">(#(cate.article_count))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+                
+                <div class="widget">
+                    <h3>🔥 热门文章</h3>
+                    <ul class="hot-list">
+                        #for(article : hotArticles)
+                        <li>
+                            <a href="/article/#(article.slug)">#(article.title)</a>
+                            <span class="views">(#(article.view_count))</span>
+                        </li>
+                        #end
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    #@footer()
+</body>
+</html>

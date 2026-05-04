@@ -1,0 +1,17 @@
+# TCP 模式连接（运行时使用）
+#jdbcUrl=jdbc:h2:tcp://localhost:9092/C:/db/oily_blog_h2;MODE=MySQL
+user=sa
+password=
+
+# 内嵌模式连接（初始化时使用）
+embeddedUrl=jdbc:h2:C:/db/oily_blog_h2;MODE=MySQL;AUTO_SERVER=TRUE
+
+devMode=true
+
+siteName=奥利顶 - 个人博客
+siteDescription=一起编程玩游戏
+siteKeywords=编程玩游戏,游戏逆向,逆向汇编
+
+pageSize=10
+uploadPath=/uploads/
+maxFileSize=10485760
