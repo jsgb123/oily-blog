@@ -129,9 +129,11 @@ password=
 - [Highlight.js](https://highlightjs.org/) - 代码高亮库
 
 ## 联系我们
+- 微信公众号【会编码】
+<img width="125" height="125" alt="qrcode_for_bytecode" src="https://github.com/user-attachments/assets/512f3798-ebfb-48c2-8c0d-5bf7575e55ea" />
 
 - 作者：奥利顶
-- 官网：[https://www.oily.top](https://www.oily.top)
+- 官网：[http://www.oily.top](http://www.oily.top)
 - GitHub：[https://github.com/jsgb123/oily-blog](https://github.com/jsgb123/oily-blog)
 
 ## 后续计划
