@@ -85,12 +85,6 @@ cp target/oily-blog.war /path/to/tomcat/webapps/
 # 后台：http://localhost:8080/oily-blog/admin/login
 ```
 
-### Docker部署（即将支持）
-
-```bash
-docker run -d -p 8080:8080 oily-top/oily-blog:latest
-```
-
 ## 项目结构
 
 ```
