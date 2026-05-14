@@ -45,8 +45,6 @@ public class AppConfig extends JFinalConfig {
         me.addSharedFunction("/view/common/header.html");
         me.addSharedFunction("/view/common/footer.html");
         me.setDevMode(PropKit.getBoolean("devMode", true));
-//        String contextPath = PropKit.get("contextPath", "");
-//        me.addSharedObject("ctx", contextPath);
     }
 
     @Override
