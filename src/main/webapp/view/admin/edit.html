@@ -1,0 +1,170 @@
+<!-- 
+Author     : 奥利顶<oily.top>
+-->
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<link rel="stylesheet" href="#(ctx)/assets/css/article-admin.css">
+#include("../common/admin_header.html")
+#include("../common/admin_footer.html")
+#set(title="编辑文章",menu= "publish",sub_title="编辑文章")
+#@adminHeader()     
+<form id="articleForm" method="post">
+    <div class="form-group">
+        <label>标题 *</label>
+        <input type="text" id="title" name="title" required value="#(article.TITLE)">
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label>URL别名 (slug)</label>
+            <input type="text" id="slug" name="slug" readonly  value="#(article.SLUG)" style="background:#f5f5f5;">
+            <div class="slug-hint">
+                用于URL：<span id="slugPreview">#(ctx)/article/#(article.SLUG)</span>
+                <span style="color:#999; margin-left:10px;">（发布后不可修改）</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>分类</label>
+            <select id="category_id" name="category_id">
+                #for(cate : categories)
+                <option value="#(cate.ID)" #if(cate.ID == article.CATEGORY_ID) selected #end>#(cate.NAME)</option>
+                #end
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>摘要</label>
+        <textarea id="summary" name="summary" rows="3" style="min-height: 100px; resize: vertical;">#(article.SUMMARY ?? '')</textarea>
+    </div>
+
+    <div class="form-group">
+        <label>标签</label>
+        <div class="tag-input" id="tagContainer">
+            <input type="text" id="tagInput" placeholder="输入标签后按回车添加">
+        </div>
+        <input type="text" id="tags" name="tags" value="#(article.TAGS)">
+    </div>
+
+    <div class="form-group">
+        <label>内容 * (支持Markdown)</label>
+        <div class="toolbar">
+            <button type="button" data-markdown="# " title="标题1">H1</button>
+            <button type="button" data-markdown="## " title="标题2">H2</button>
+            <button type="button" data-markdown="&#35;&#35;&#35; " title="标题3">H3</button>
+            <button type="button" data-markdown="**加粗文本**" title="粗体">B</button>
+            <button type="button" data-markdown="*斜体文本*" title="斜体">I</button>
+            <button type="button" data-markdown="```&#10;code&#10;```" title="代码块">&lt;/&gt;</button>
+            <button type="button" data-markdown="[链接](url)" title="链接">🔗</button>
+            <button type="button" data-markdown="![](url)" title="图片">🖼️</button>
+            <button type="button" data-markdown="- 列表项" title="无序列表">•</button>
+            <button type="button" data-markdown="1. 列表项" title="有序列表">1.</button>
+            <button type="button" data-markdown="> 引用" title="引用">"</button>
+        </div> 
+
+        <div class="markdown-editor">
+            <div class="editor-pane">
+                <textarea id="content" name="content" rows="20">#(article.CONTENT)</textarea>
+            </div>
+            <div class="preview-pane">
+                <h3>实时预览</h3>
+                <div id="preview" class="preview-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label>状态</label>
+            <select id="status" name="status">
+                <option value="1" #if(article.STATUS == 1) selected #end>发布</option>
+                <option value="0" #if(article.STATUS == 0) selected #end>草稿</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>置顶</label>
+            <select id="is_top" name="is_top">
+                <option value="0" #if(article.IS_TOP == 0) selected #end>不置顶</option>
+                <option value="1" #if(article.IS_TOP == 1) selected #end>置顶</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn-submit">保存修改</button>
+        <a href="#(ctx)/admin/articles" class="btn-cancel">取消</a>
+    </div>
+</form>
+#@adminFooter()
+
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/marked/11.1.1/marked.min.js"></script>
+<script src="#(ctx)/assets/js/article-admin.js"></script>
+
+<!-- 备用方案：如果加载失败，自动回退到 Staticfile CDN -->
+<script>
+    window.addEventListener('load', function () {
+        // 检测 marked 和 hljs 是否加载成功
+        if (typeof marked === 'undefined') {
+            var fallbackMarked = document.createElement('script');
+            fallbackMarked.src = 'https://cdn.staticfile.org/marked/11.1.1/marked.min.js';
+            document.head.appendChild(fallbackMarked);
+        }
+        if (typeof hljs === 'undefined') {
+            var fallbackHljs = document.createElement('script');
+            fallbackHljs.src = 'https://cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js';
+            fallbackHljs.onload = function () {
+                hljs.highlightAll();
+            };
+            document.head.appendChild(fallbackHljs);
+        }
+    });
+
+    // 提交表单
+    document.getElementById('articleForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let title = document.getElementById('title').value;
+        if (!title) {
+            alert('请输入文章标题');
+            return;
+        }
+
+        let content = document.getElementById('content').value;
+        if (!content) {
+            alert('请输入文章内容');
+            return;
+        }
+
+        let formData = new URLSearchParams();
+        formData.append('id', '#(article.ID)');
+        formData.append('title', title);
+        formData.append('slug', document.getElementById('slug').value);
+        formData.append('summary', document.getElementById('summary').value);
+        formData.append('content', content);
+        formData.append('category_id', document.getElementById('category_id').value);
+        formData.append('tags', document.getElementById('tags').value);
+        formData.append('status', document.getElementById('status').value);
+        formData.append('is_top', document.getElementById('is_top').value);
+
+        fetch('#(ctx)/admin/doEdit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData.toString()
+        })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('保存成功！');
+                        window.location.href = '#(ctx)/admin/articles';
+                    } else {
+                        alert('保存失败：' + (data.message || '未知错误'));
+                    }
+                })
+                .catch(error => {
+                    alert('请求失败：' + error.message);
+                });
+    });
+</script>

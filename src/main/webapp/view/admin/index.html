@@ -60,7 +60,7 @@ Author     : 奥利顶<oily.top>
                 <td>#if(article.STATUS == 1) <span class="status-published">已发布</span> #else <span class="status-draft">草稿</span> #end</td>
                 <td>
                     <a href="#(ctx)/admin/edit/#(article.ID)" class="btn-edit">编辑</a>
-                    <a href="javascript:void(0)" onclick="confirmDelete('#(ctx)/admin/delete/#(article.ID)', '确定删除这篇文章吗？')" class="btn-delete">删除</a>
+                    <a href="javascript:void(0)" onclick="deleteArticle('#(article.ID)')" class="btn-delete">删除</a>
                 </td>
             </tr>
             #end
@@ -68,3 +68,13 @@ Author     : 奥利顶<oily.top>
     </table>
 </div>
 #@adminFooter()
+<script>
+    // 删除确认
+    function deleteArticle(id) {
+        confirmDialog('确定删除这篇文章吗？', function (confirmed) {
+            if (confirmed) {
+                window.location.href = '#(ctx)/admin/delete/' + id;
+            }
+        });
+    }
+</script>

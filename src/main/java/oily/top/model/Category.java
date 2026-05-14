@@ -16,7 +16,7 @@ public class Category extends Model<Category> {
      * 获取所有分类
      */
     public List<Category> getAllCategories() {
-        return Category.dao.find("SELECT * FROM category ORDER BY SORT ASC, id ASC");
+        return Category.dao.find("SELECT * FROM CATEGORY ORDER BY SORT ASC");
     }
 
     /**

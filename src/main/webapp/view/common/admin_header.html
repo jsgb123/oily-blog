@@ -5,47 +5,48 @@ Author     : 奥利顶<oily.top>
 #define adminHeader()
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#(title) - 奥利顶 Oily Blog</title>
-    <link rel="stylesheet" href="#(ctx)/assets/css/admin.css">
-</head>
-<body>
-    <div class="admin-container">
-        <aside class="admin-sidebar">
-            <div class="logo">
-                <h2>Oily Blog</h2>
-                <p>后台管理系统</p>
-            </div>
-            <nav class="admin-nav">
-                <a href="#(ctx)/admin/index" class="nav-item #(menu == 'index' ? 'active' : '')">
-                    <span>📊</span> 控制台
-                </a>
-                <a href="#(ctx)/admin/articles" class="nav-item #(menu == 'articles' ? 'active' : '')">
-                    <span>📝</span> 文章管理
-                </a>
-                <a href="#(ctx)/admin/publish" class="nav-item #(menu == 'publish' ? 'active' : '')">
-                    <span>✏️</span> 发布文章
-                </a>
-                <a href="#(ctx)/admin/categories" class="nav-item #(menu == 'categories' ? 'active' : '')">
-                    <span>📂</span> 分类管理
-                </a>
-                <a href="#(ctx)/admin/profile" class="nav-item #(menu == 'profile' ? 'active' : '')">
-                    <span>👤</span> 个人设置
-                </a>
-                <a href="#(ctx)/admin/logout" class="nav-item logout">
-                    <span>🚪</span> 退出登录
-                </a>
-            </nav>
-        </aside>
-
-        <main class="admin-main">
-            <div class="admin-header">
-                <h1>#(title)</h1>
-                <div class="admin-user">
-                    欢迎，#(admin != null ? (admin.NICKNAME ?? admin.USERNAME) : '管理员')
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>#(title) - 奥利顶 Oily Blog</title>
+        <link rel="stylesheet" href="#(ctx)/assets/css/admin.css">
+        <link rel="shortcut icon" href="#(ctx)/assets/imgs/favicon.ico">
+    </head>
+    <body>
+        <div class="admin-container">
+            <aside class="admin-sidebar">
+                <div class="logo">
+                    <h2>Oily Blog</h2>
+                    <p>后台管理系统</p>
                 </div>
-            </div>
-            <div class="admin-content">
-#end
+                <nav class="admin-nav">
+                    <a href="#(ctx)/admin/index" class="nav-item #(menu == 'index' ? 'active' : '')">
+                        <span>📊</span> 控制台
+                    </a>
+                    <a href="#(ctx)/admin/articles" class="nav-item #(menu == 'articles' ? 'active' : '')">
+                        <span>📝</span> 文章管理
+                    </a>
+                    <a href="#(ctx)/admin/publish" class="nav-item #(menu == 'publish' ? 'active' : '')">
+                        <span>✏️</span> #(sub_title? sub_title:'发布文章')
+                    </a>
+                    <a href="#(ctx)/admin/categories" class="nav-item #(menu == 'categories' ? 'active' : '')">
+                        <span>📂</span> 分类管理
+                    </a>
+                    <a href="#(ctx)/admin/profile" class="nav-item #(menu == 'profile' ? 'active' : '')">
+                        <span>👤</span> 个人设置
+                    </a>
+                    <a href="#(ctx)/admin/logout" class="nav-item logout">
+                        <span>🚪</span> 退出登录
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="admin-main">
+                <div class="admin-header">
+                    <h1>#(title)</h1>
+                    <div class="admin-user">
+                        欢迎，#(admin != null ? (admin.NICKNAME ?? admin.USERNAME) : '管理员')
+                    </div>
+                </div>
+                <div class="admin-content">
+                    #end

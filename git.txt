@@ -1,0 +1,59 @@
+==============#查看远程有没更新============================
+# 1. 先获取，不合并
+git fetch origin
+
+# 2. 查看远程是否有更新
+git log main..origin/main --oneline
+
+# 3. 如果有输出，说明有人更新了
+
+# 4. 查看具体改了什么
+git diff main origin/main
+===============#初始化以后的推送===========================
+
+git add src/
+git add pom.xml
+git add README.md
+# 或者一行搞定
+git add src/ pom.xml README.md
+
+git commit -m "修改说明"
+git push
+================#第一初始化============================
+
+git init
+
+# 添加 src 文件夹
+git add src/
+
+# 添加 pom.xml
+git add pom.xml
+
+# 添加 README.md
+git add README.md
+
+# 或者一行搞定
+git add src/ pom.xml README.md
+
+# 提交到本地
+git commit -m "Initial commit: Oily Blog 核心代码"
+
+# 重命名分支为 main (只需执行一次)
+git branch -M main
+
+# 添加远程仓库 （只需执行一次）
+git remote add origin https://github.com/jsgb123/oily-blog.git
+
+# 推送到 GitHub 第一次推送（已执行过）
+git push -u origin main
+
+#下次推送
+git push 
+
+# 推送到 GitHub (强行覆盖！)
+git push -u origin main --force
+
+# 先获取远程最新版本
+git fetch origin
+# 从远程检出 README.md 覆盖本地
+git checkout origin/main -- README.md

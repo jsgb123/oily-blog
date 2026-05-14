@@ -10,6 +10,8 @@ import com.jfinal.plugin.activerecord.Db;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 /**
  * 后台管理控制器
@@ -57,7 +59,6 @@ public class AdminController extends Controller {
         }
         User admin = getSessionAttr("admin");
         setAttr("admin", admin);
-        System.out.println("oily.top.controller.AdminController.index()" + admin.get("username"));
 
         // 使用 Db.queryLong 更安全
         Long articleCount = Db.queryLong("SELECT COUNT(*) FROM article");
@@ -144,15 +145,14 @@ public class AdminController extends Controller {
                 renderJson(result);
                 return;
             }
-// 生成slug
-            if (StrKit.isBlank(slug)) {
-                slug = generateSlug(title);
-            }
+// 检测slug
+            slug = generateSlug(title);
 
             // 检查slug是否唯一
             Article existArticle = Article.dao.findFirst("SELECT id FROM article WHERE slug=?", slug);
+            System.out.println("oily.top.controller.AdminController.doPublish()" + (existArticle == null));
             if (existArticle != null) {
-                slug = slug  + System.currentTimeMillis();
+                slug = slug + System.currentTimeMillis();
             }
 
             // 创建文章对象
@@ -217,6 +217,15 @@ public class AdminController extends Controller {
 
         try {
             int id = getParaToInt("id");
+            String title = getPara("title");
+            //String slug = getPara("slug");
+            String summary = getPara("summary");
+            String content = getPara("content");
+            Integer categoryId = getParaToInt("category_id");
+            String tags = getPara("tags");
+            Integer status = getParaToInt("status", 1);
+            Integer isTop = getParaToInt("is_top", 0);
+
             Article article = Article.dao.findById(id);
             if (article == null) {
                 result.put("success", false);
@@ -225,44 +234,27 @@ public class AdminController extends Controller {
                 return;
             }
 
-            String title = getPara("title");
-            String slug = getPara("slug");
+            // 生成 HTML
+            String contentHtml = convertMarkdownToHtml(content);
 
-            if (StrKit.isBlank(slug)) {
-                slug = generateSlug(title);
-            }
+            // 使用 Db.update 直接更新
+            int updateResult = Db.update(
+                    "UPDATE article SET title = ?, summary = ?, content = ?, content_html = ?, category_id = ?, tags = ?, status = ?, is_top = ? WHERE id = ?",
+                    title, summary != null ? summary : "", content, contentHtml,
+                    categoryId, tags != null ? tags : "", status, isTop, id
+            );
 
-            // 检查slug唯一性
-            Article existArticle = Article.dao.findFirst("SELECT id FROM article WHERE slug=? AND id!=?", slug, id);
-            if (existArticle != null) {
-                slug = slug + "-" + System.currentTimeMillis();
-            }
-
-            article.set("title", title);
-            article.set("slug", slug);
-            article.set("summary", getPara("summary"));
-            article.setContentAndRender(getPara("content"));
-            article.set("category_id", getParaToInt("category_id"));
-            article.set("tags", getPara("tags"));
-            article.set("status", getParaToInt("status", 1));
-            article.set("is_top", getParaToInt("is_top", 0));
-            article.set("is_original", getParaToInt("is_original", 1));
-            article.set("source_url", getPara("source_url"));
-            article.set("seo_keywords", getPara("seo_keywords"));
-            article.set("seo_description", getPara("seo_description"));
-            article.set("update_time", new Date());
-
-            if (article.update()) {
+            if (updateResult > 0) {
                 result.put("success", true);
-                result.put("message", "更新成功");
+                result.put("message", "保存成功");
             } else {
                 result.put("success", false);
-                result.put("message", "更新失败");
+                result.put("message", "保存失败");
             }
         } catch (Exception e) {
             e.printStackTrace();
             result.put("success", false);
-            result.put("message", "更新失败：" + e.getMessage());
+            result.put("message", e.getMessage());
         }
 
         renderJson(result);
@@ -330,9 +322,7 @@ public class AdminController extends Controller {
         String description = getPara("description");
         Integer sort = getParaToInt("sort", 0);
 
-        if (StrKit.isBlank(slug)) {
-            slug = generateSlug(name);
-        }
+        slug = generateSlug(name);
 
         Category category = new Category();
         category.set("NAME", name);
@@ -472,11 +462,24 @@ public class AdminController extends Controller {
      * 生成URL slug
      */
     private String generateSlug(String title) {
-        if (title == null) {
-            return "";
+        if (title == null || title.trim().isEmpty()) {
+            return "post";
         }
-        return title.toLowerCase()
-                .replaceAll("[^a-z0-9\\u4e00-\\u9fa5]+", "-")
-                .replaceAll("^-|-$", "");
+
+        String slug = title.toLowerCase()
+                .replaceAll("[^a-z0-9\\s_]", "") // 只保留字母、数字、空格、下划线
+                .replaceAll("\\s+", "_");         // 空格转下划线
+        return slug.isEmpty() ? "post" : slug;
+    }
+
+    private String convertMarkdownToHtml(String content) {
+        try {
+            Parser parser = Parser.builder().build();
+            HtmlRenderer renderer = HtmlRenderer.builder().build();
+            String html = renderer.render(parser.parse(content));
+            return html;
+        } catch (Exception e) {
+            return content;
+        }
     }
 }

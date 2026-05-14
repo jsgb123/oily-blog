@@ -211,7 +211,7 @@ Author     : 奥利顶<oily.top>
     // 自动生成slug
     document.getElementById('cate_name').addEventListener('input', function() {
     let slug = this.value.toLowerCase()
-            .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+            .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '_')
             .replace(/^-|-$/g, '');
     document.getElementById('cate_slug').value = slug;
     document.getElementById('slugPreview').innerText = slug || '...';
@@ -379,5 +379,3 @@ Author     : 奥利顶<oily.top>
     }
     }
 </script>
-</body>
-</html>
