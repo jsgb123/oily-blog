@@ -36,9 +36,8 @@ Author     : 奥利顶<oily.top>
                 #end
 
                 <div class="detail-content">
-                    #(article.CONTENT_HTML)123
-                </div>
-                
+                    #(article.CONTENT_HTML)
+                </div>                
                 
                 <div class="detail-nav">
                     #if(prevArticle)
@@ -113,6 +112,9 @@ Author     : 奥利顶<oily.top>
 </main>
 
 <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<!-- 再引入缺失语言的扩展包 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/pascal.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/languages/armasm.min.js"></script>
 <script>
     hljs.highlightAll();
 </script>
