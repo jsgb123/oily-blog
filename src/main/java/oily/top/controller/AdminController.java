@@ -10,6 +10,7 @@ import com.jfinal.plugin.activerecord.Db;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import oily.top.util.MarkdownUtil;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
@@ -146,11 +147,11 @@ public class AdminController extends Controller {
                 return;
             }
 // 检测slug
-            slug = generateSlug(title);
+            slug = checkSlug(slug);
 
             // 检查slug是否唯一
             Article existArticle = Article.dao.findFirst("SELECT id FROM article WHERE slug=?", slug);
-            System.out.println("oily.top.controller.AdminController.doPublish()" + (existArticle == null));
+
             if (existArticle != null) {
                 slug = slug + System.currentTimeMillis();
             }
@@ -160,7 +161,10 @@ public class AdminController extends Controller {
             article.set("TITLE", title);
             article.set("SLUG", slug);
             article.set("SUMMARY", summary != null ? summary : "");
-            article.setContentAndRender(content);
+
+            article.set("CONTENT", content);
+             article.set("CONTENT_HTML", "");
+//            article.set("CONTENT_HTML", MarkdownUtil.toHtml(content));
             article.set("CATEGORY_ID", categoryId);
             article.set("TAGS", tags != null ? tags : "");
             article.set("VIEW_COUNT", 0);
@@ -235,8 +239,8 @@ public class AdminController extends Controller {
             }
 
             // 生成 HTML
-            String contentHtml = convertMarkdownToHtml(content);
-
+//            String contentHtml = MarkdownUtil.toHtml(content);
+String contentHtml = "";
             // 使用 Db.update 直接更新
             int updateResult = Db.update(
                     "UPDATE article SET title = ?, summary = ?, content = ?, content_html = ?, category_id = ?, tags = ?, status = ?, is_top = ? WHERE id = ?",
@@ -322,7 +326,7 @@ public class AdminController extends Controller {
         String description = getPara("description");
         Integer sort = getParaToInt("sort", 0);
 
-        slug = generateSlug(name);
+        slug = checkSlug(slug);
 
         Category category = new Category();
         category.set("NAME", name);
@@ -461,25 +465,14 @@ public class AdminController extends Controller {
     /**
      * 生成URL slug
      */
-    private String generateSlug(String title) {
-        if (title == null || title.trim().isEmpty()) {
+    private String checkSlug(String slug) {
+        if (slug == null || slug.trim().isEmpty()) {
             return "post";
         }
 
-        String slug = title.toLowerCase()
+        String slug0 = slug.toLowerCase()
                 .replaceAll("[^a-z0-9\\s_]", "") // 只保留字母、数字、空格、下划线
                 .replaceAll("\\s+", "_");         // 空格转下划线
-        return slug.isEmpty() ? "post" : slug;
-    }
-
-    private String convertMarkdownToHtml(String content) {
-        try {
-            Parser parser = Parser.builder().build();
-            HtmlRenderer renderer = HtmlRenderer.builder().build();
-            String html = renderer.render(parser.parse(content));
-            return html;
-        } catch (Exception e) {
-            return content;
-        }
+        return slug0.isEmpty() ? "post" : slug0;
     }
 }

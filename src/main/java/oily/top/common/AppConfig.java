@@ -1,10 +1,15 @@
 package oily.top.common;
 
+import com.jfinal.config.Constants;
+import com.jfinal.config.Handlers;
+import com.jfinal.config.Interceptors;
+import com.jfinal.config.JFinalConfig;
+import com.jfinal.config.Plugins;
+import com.jfinal.config.Routes;
 import oily.top.controller.*;
 import oily.top.handler.SeoHandler;
 import oily.top.interceptor.SeoInterceptor;
 import oily.top.model.*;
-import com.jfinal.config.*;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
@@ -18,7 +23,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 /**
- * 
+ *
  * @author 奥利顶<oily.top>
  */
 public class AppConfig extends JFinalConfig {

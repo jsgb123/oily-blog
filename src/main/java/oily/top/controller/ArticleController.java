@@ -6,6 +6,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import java.util.List;
+import oily.top.util.MarkdownUtil;
 
 /**
  * 文章控制器 - 处理文章前台展示
@@ -28,10 +29,18 @@ public class ArticleController extends Controller {
         Article article = Article.dao.findFirst(
                 "SELECT * FROM ARTICLE WHERE SLUG = ? AND STATUS = 1", slug
         );
+
         if (article == null) {
             redirect("/");
             return;
         }
+//        jfinal在读取CONTENT_HTML长文本内容时候会出错误
+        String content = article.getStr("CONTENT");
+        if (content != null && content.trim().length() > 0) {
+            String html = MarkdownUtil.toHtml(content);
+            article.set("CONTENT_HTML", html);
+        }
+
 // 增加浏览量
         Db.update("UPDATE ARTICLE SET VIEW_COUNT = VIEW_COUNT + 1 WHERE ID = ?", article.getInt("ID"));
 
@@ -56,8 +65,14 @@ public class ArticleController extends Controller {
                 article.getInt("CATEGORY_ID"), article.getInt("ID")
         );
 
-        // 获取分类列表
-        List<Category> categories = Category.dao.find("SELECT * FROM CATEGORY ORDER BY SORT ASC");
+// 一次性查询分类及其文章数量
+        List<Category> categories = Category.dao.find(
+                "SELECT c.ID, c.NAME, c.SLUG, COUNT(a.ID) as ARTICLE_COUNT "
+                + "FROM CATEGORY c "
+                + "LEFT JOIN ARTICLE a ON a.CATEGORY_ID = c.ID AND a.STATUS = 1 "
+                + "GROUP BY c.ID, c.NAME, c.SLUG "
+                + "ORDER BY c.SORT ASC"
+        );
 
         setAttr("article", article);
         setAttr("category", category);
@@ -65,7 +80,7 @@ public class ArticleController extends Controller {
         setAttr("nextArticle", nextArticle);
         setAttr("relatedArticles", relatedArticles);
         setAttr("categories", categories);
-        
+
         render("article.html");
     }
 

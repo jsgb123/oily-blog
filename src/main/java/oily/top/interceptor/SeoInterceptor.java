@@ -34,13 +34,13 @@ public class SeoInterceptor implements Interceptor {
             c.setAttr("seo_title", article.getStr("TITLE") + " - 奥利顶 Oily Blog");
             c.setAttr("seo_keywords", article.getStr("TAGS"));
             c.setAttr("seo_description", article.getStr("SUMMARY"));
-            System.out.println("oily.top.interceptor.SeoInterceptor.intercept()article");
+
         } else if (actionKey.equals("/category") && c.getAttr("category") != null) {
             Category category = c.getAttr("category");
             c.setAttr("seo_title", category.getStr("NAME") + " - 奥利顶 Oily Blog");
             c.setAttr("seo_keywords", category.getStr("NAME"));
             c.setAttr("seo_description", category.getStr("DESCRIPTION"));
-            System.out.println("oily.top.interceptor.SeoInterceptor.intercept()category");
+
         }
                 c.setAttr("ctx", c.getRequest().getContextPath());// 项目名=/oily-blog，ROOT=/
     }

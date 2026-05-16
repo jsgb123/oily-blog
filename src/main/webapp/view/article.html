@@ -36,9 +36,10 @@ Author     : 奥利顶<oily.top>
                 #end
 
                 <div class="detail-content">
-                    #(article.CONTENT_HTML ?? article.CONTENT)
+                    #(article.CONTENT_HTML)123
                 </div>
-
+                
+                
                 <div class="detail-nav">
                     #if(prevArticle)
                     <a href="#(ctx)/article/#(prevArticle.SLUG)" class="nav-prev">← #(prevArticle.TITLE)</a>
@@ -112,5 +113,7 @@ Author     : 奥利顶<oily.top>
 </main>
 
 <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+<script>
+    hljs.highlightAll();
+</script>
 #include("common/footer.html")

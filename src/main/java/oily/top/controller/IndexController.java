@@ -36,7 +36,6 @@ public class IndexController extends Controller {
         setAttr("keyword", keyword);
         set("currentYear", java.time.LocalDate.now().getYear());
         
-        System.out.println("oily.top.controller.IndexController.index()"+getAttr("seo_title"));
         render("index.html");
     }
     

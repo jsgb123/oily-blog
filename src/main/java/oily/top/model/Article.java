@@ -5,6 +5,8 @@ import com.jfinal.plugin.activerecord.Page;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import java.util.List;
+import oily.top.util.MarkdownUtil;
+import org.commonmark.ext.gfm.tables.TablesExtension;
 
 /**
  * 文章模型
@@ -14,21 +16,6 @@ import java.util.List;
 public class Article extends Model<Article> {
 
     public static final Article dao = new Article();
-
-    /**
-     * 将Markdown转换为HTML
-     */
-    public void setContentAndRender(String content) {
-        set("CONTENT", content);
-        try {
-            Parser parser = Parser.builder().build();
-            HtmlRenderer renderer = HtmlRenderer.builder().build();
-            String html = renderer.render(parser.parse(content));
-            set("CONTENT_HTML", html);
-        } catch (Exception e) {
-            set("CONTENT_HTML", content);
-        }
-    }
 
     /**
      * 分页查询文章（前台）
