@@ -1,5 +1,6 @@
 package oily.top.model;
 
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import java.util.List;
 
@@ -48,8 +49,12 @@ public class Category extends Model<Category> {
     public List<Category> getCategoriesWithCount() {
         List<Category> categories = getAllCategories();
         for (Category cate : categories) {
-            long count = getArticleCount(cate.getInt("id"));
-            cate.put("article_count", count);
+            try {
+                Long count = Db.queryLong("SELECT COUNT(*) FROM ARTICLE WHERE CATEGORY_ID = ? AND STATUS = 1", cate.getInt("ID"));
+                cate.put("ARTICLE_COUNT", count != null ? count : 0);
+            } catch (Exception e) {
+                cate.put("ARTICLE_COUNT", 0);
+            }
         }
         return categories;
     }

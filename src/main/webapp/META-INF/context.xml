@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/oily-blog"/>
+<Context path="/">
+    <Resources>
+        <PreResources base="C:/db/oilyblog/uploads"
+                      className="org.apache.catalina.webresources.DirResourceSet"
+                      webAppMount="/uploads" />
+    </Resources>
+</Context>

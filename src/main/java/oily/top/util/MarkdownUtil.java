@@ -36,4 +36,39 @@ public class MarkdownUtil {
             return "Markdown转Html格式转换错误";
         }
     }
+
+    /**
+     * 添加处理图片路径
+     *
+     * @param html
+     * @param contextPath
+     * @return
+     */
+    public static String processImagePath(String html, String contextPath) {
+        if (html == null || html.trim().isEmpty()) {
+            return html;
+        }
+
+        if (contextPath == null || contextPath.isEmpty() || "/".equals(contextPath)) {
+            return html;
+        }
+
+        // 匹配 img 标签中的 src 属性，且路径以 /uploads/ 开头
+        // 使用 Pattern 和 Matcher 进行精确匹配
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(
+                "(<img\\s+[^>]*src=\")(/uploads/[^\"]+)\"",
+                java.util.regex.Pattern.CASE_INSENSITIVE
+        );
+
+        java.util.regex.Matcher matcher = pattern.matcher(html);
+        StringBuffer sb = new StringBuffer();
+
+        while (matcher.find()) {
+            String replacement = matcher.group(1) + contextPath + matcher.group(2) + "\"";
+            matcher.appendReplacement(sb, java.util.regex.Matcher.quoteReplacement(replacement));
+        }
+        matcher.appendTail(sb);
+
+        return sb.toString();
+    }
 }

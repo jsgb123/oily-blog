@@ -6,6 +6,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.handler.Handler;
 import oily.top.controller.*;
 import oily.top.handler.SeoHandler;
 import oily.top.interceptor.SeoInterceptor;
@@ -16,11 +17,15 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -30,17 +35,56 @@ public class AppConfig extends JFinalConfig {
 
     @Override
     public void configConstant(Constants me) {
-        PropKit.use("config.txt", "UTF-8");
+        // 自动检测环境
+    String env = detectEnvironment();
+        System.out.println("oily.top.common.AppConfig.configConstant()"+env);
+    String configFile = "config_" + env + ".txt";
+        PropKit.use(configFile, "UTF-8");
         me.setDevMode(PropKit.getBoolean("devMode", true));
         me.setViewType(ViewType.JFINAL_TEMPLATE);
         me.setEncoding("UTF-8");
         me.setError404View("/view/404.html");
         me.setError500View("/view/500.html");
+        // 配置静态资源路径
+        me.setBaseUploadPath("uploads");
+        me.setBaseDownloadPath("uploads");
+    }
+
+    /**
+     * 检测运行环境
+     *
+     * @return "dev" 或 "prod"
+     */
+    private String detectEnvironment() {
+        // 方法1：检测 Maven 项目结构（开发环境特征）
+        File srcDir = new File("src/main/webapp");
+        if (srcDir.exists() && srcDir.isDirectory()) {
+            return "dev";
+        }
+
+        // 方法2：检测是否在 IDE 中运行
+        String classPath = System.getProperty("java.class.path");
+        if (classPath != null && (classPath.contains("maven")
+                || classPath.contains("idea") || classPath.contains("netbeans"))) {
+            return "dev";
+        }
+
+        // 方法3：通过 JVM 参数手动指定（可覆盖自动检测）
+        String env = System.getProperty("app.env");
+        if (env != null) {
+            if (env.equals("dev") || env.equals("prod")) {
+                return env;
+            }
+        }
+
+        // 默认生产环境
+        return "prod";
     }
 
     @Override
     public void configRoute(Routes me) {
         me.add("/", IndexController.class, "view");
+me.add("/*.html", IndexController.class);
         me.add("/admin", AdminController.class, "view");
         me.add("/article", ArticleController.class, "view");
     }
@@ -264,5 +308,40 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configHandler(Handlers me) {
         me.add(new SeoHandler());
+
+        // 自定义 Handler 处理图片请求
+        me.add(new Handler() {
+            @Override
+            public void handle(String target, HttpServletRequest request,
+                    HttpServletResponse response, boolean[] isHandled) {
+                // 处理 /uploads/ 开头的请求
+                if (target.startsWith("/uploads/")) {
+                    String filePath = PropKit.get("uploadPath") + target;
+                    File file = new File(filePath);
+                    if (file.exists() && !file.isDirectory()) {
+                        try {
+                            java.nio.file.Files.copy(file.toPath(), response.getOutputStream());
+                            // 根据文件扩展名设置 Content-Type
+                            if (target.endsWith(".jpg") || target.endsWith(".jpeg")) {
+                                response.setContentType("image/jpeg");
+                            } else if (target.endsWith(".png")) {
+                                response.setContentType("image/png");
+                            } else if (target.endsWith(".gif")) {
+                                response.setContentType("image/gif");
+                            }
+                            isHandled[0] = true;
+                            return;
+                        } catch (IOException e) {
+                        }
+                    }
+                    // 文件不存在，返回404
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    isHandled[0] = true;
+                    return;
+                }
+                next.handle(target, request, response, isHandled);
+            }
+        });
     }
+
 }

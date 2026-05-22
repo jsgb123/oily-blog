@@ -110,12 +110,14 @@ Author     : 奥利顶<oily.top>
         </div>
     </div>
 </main>
+<!--jsdelivr提供的js体积更小-->
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
 
-<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<!-- 再引入缺失语言的扩展包 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/pascal.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/languages/armasm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/delphi.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/x86asm.min.js"></script>
 <script>
     hljs.highlightAll();
+    console.log(hljs.listLanguages());
 </script>
 #include("common/footer.html")

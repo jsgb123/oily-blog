@@ -57,25 +57,7 @@
 }
     </style>
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <a href="#(ctx)/">
-                    <img src="#(ctx)/assets/imgs/logo.png" alt="奥利顶" class="logo-img">
-                    <span>奥利顶</span>
-                    <small>oily.top</small>
-                </a>
-            </div>
-            <nav class="nav">
-                <a href="#(ctx)/">首页</a>
-                #for(cate : categories)
-                <a href="#(ctx)/c/#(cate.SLUG)" class="#(cate.ID == category.ID ? 'active' : '')">#(cate.NAME)</a>
-                #end
-                <a href="#(ctx)/admin/login">后台</a>
-            </nav>
-        </div>
-    </header>
+#include("common/header.html")
 
     <main>
         <div class="category-header">
@@ -175,10 +157,4 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <p>© 2026 奥利顶 | Powered by JFinal | Developed by <a href="https://www.oily.top" target="_blank">奥利顶</a></p>
-        </div>
-    </footer>
-</body>
-</html>
+    #include("common/footer.html")

@@ -34,10 +34,14 @@ public class ArticleController extends Controller {
             redirect("/");
             return;
         }
+        String ctx = getRequest().getContextPath();
 //        jfinal在读取CONTENT_HTML长文本内容时候会出错误
         String content = article.getStr("CONTENT");
         if (content != null && content.trim().length() > 0) {
             String html = MarkdownUtil.toHtml(content);
+
+            html = MarkdownUtil.processImagePath(html, ctx);
+
             article.set("CONTENT_HTML", html);
         }
 
@@ -115,7 +119,7 @@ public class ArticleController extends Controller {
      * 标签文章列表
      */
     public void tag() {
-        String tag = getPara(0);
+        String tag = getAttr("tag");
         int pageNum = getParaToInt("page", 1);
 
         if (tag == null || tag.trim().isEmpty()) {
@@ -123,6 +127,8 @@ public class ArticleController extends Controller {
             return;
         }
 
+            System.out.println("oily.top.controller.ArticleController.tag()"+tag);
+            
         // 设置SEO信息
         setAttr("seo_title", tag + " - 标签 -奥利顶 Oily Blog");
         setAttr("seo_keywords", tag);

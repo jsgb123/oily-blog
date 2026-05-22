@@ -34,7 +34,11 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency> 
-
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
         <!-- Druid连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -42,29 +46,14 @@
             <version>1.1.24</version>
             <!--1.2.16-->
         </dependency>
-
-        <!-- Servlet API（Tomcat提供，仅编译） -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
+        
         <!-- Log4j -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
-        <!-- 文件上传 -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.4</version>
-        </dependency>
-
+        
         <!-- Common Lang -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -77,20 +66,72 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.83</version>
         </dependency>
-        <!--         Markdown支持 -->
+        <!-- Markdown支持 -->
         <dependency>
             <groupId>org.commonmark</groupId>
             <artifactId>commonmark</artifactId>
             <version>0.21.0</version>
         </dependency>
-         <!--CommonMark 表格扩展--> 
+        <!--CommonMark 表格扩展--> 
         <dependency>
             <groupId>org.commonmark</groupId>
             <artifactId>commonmark-ext-gfm-tables</artifactId>
             <version>0.21.0</version>
         </dependency>
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
+    
+    <profiles>
+        <!--开发环境 Profile--> 
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.jfinal</groupId>
+                    <artifactId>jetty-server</artifactId>
+                    <version>2019.3</version>
+                </dependency>
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <version>3.1.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    
+        <!--生产环境 Profile (用于打包)--> 
+        <profile>
+            <id>prod</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.3.2</version>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            打包时排除 jetty 相关 JAR 
+                            <packagingExcludes>
+                                WEB-INF/lib/jetty-server-*.jar,
+                                WEB-INF/lib/javax.servlet-api-*.jar
+                                WEB-INF/classes/oily/top/BlogStart.class
+                            </packagingExcludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>oily-blog</finalName>
@@ -113,20 +154,27 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            <!--运行 mvn jetty:run-->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.44.v20210927</version>
                 <configuration>
+                    <webApp>
+                        <contextPath>/oily-blog</contextPath>
+                        <resourceBases>
+                            <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
+                            <!--这里目录最后不加/uploads-->
+                            <resourceBase>C:/db/oilyblog</resourceBase>
+                        </resourceBases>
+                    </webApp>
                     <httpConnector>
                         <port>8080</port>
                     </httpConnector>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                    </webApp>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

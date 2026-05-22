@@ -97,10 +97,11 @@ Author     : 奥利顶<oily.top>
 </form>
 #@adminFooter()
 
-<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script src="https://cdn.bootcdn.net/ajax/libs/marked/11.1.1/marked.min.js"></script>
 <script src="#(ctx)/assets/js/article-admin.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/delphi.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/x86asm.min.js"></script>
 <!-- 备用方案：如果加载失败，自动回退到 Staticfile CDN -->
 <script>
     window.addEventListener('load', function () {

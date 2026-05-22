@@ -11,11 +11,11 @@ import oily.top.model.Article;
  *
  * @author 奥利顶<oily.top>
  */
-public class DruidPluginRead {
+public class JfinalDbRead {
 
     public static void main(String[] args) throws SQLException {
         // 1. 加载配置
-        String jdbcUrl = "jdbc:h2:C:/db/oily_blog_h2;MODE=MySQL;AUTO_SERVER=TRUE";
+        String jdbcUrl = "jdbc:h2:/data/db/oily_blog_h2;MODE=MySQL;AUTO_SERVER=TRUE";
         String user = "sa";
         String password = "";
 

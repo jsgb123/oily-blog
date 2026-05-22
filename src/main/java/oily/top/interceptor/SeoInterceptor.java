@@ -8,6 +8,7 @@ import oily.top.model.Category;
 
 /**
  * 经过控制器再到这里
+ *
  * @author 奥利顶<oily.top>
  */
 public class SeoInterceptor implements Interceptor {
@@ -42,6 +43,6 @@ public class SeoInterceptor implements Interceptor {
             c.setAttr("seo_description", category.getStr("DESCRIPTION"));
 
         }
-                c.setAttr("ctx", c.getRequest().getContextPath());// 项目名=/oily-blog，ROOT=/
+        c.setAttr("ctx", c.getRequest().getContextPath());// 项目名=/oily-blog，ROOT=/
     }
 }

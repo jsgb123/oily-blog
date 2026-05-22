@@ -1,0 +1,321 @@
+2026-05-18 19:56:09 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 19:56:09 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 19:56:09 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 19:56:28 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 19:56:46 [qtp458209687-19] ERROR ActionHandler - oily.top.controller.AdminController.uploadImage() : /admin/uploadImage
+java.lang.RuntimeException: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:107)
+	at oily.top.interceptor.SeoInterceptor.intercept(SeoInterceptor.java:24)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:91)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:88)
+	at oily.top.common.AppConfig$1.handle(AppConfig.java:306)
+	at oily.top.handler.SeoHandler.handle(SeoHandler.java:75)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:90)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.Server.handle(Server.java:503)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.upload.MultipartRequest.wrapMultipartRequest(MultipartRequest.java:107)
+	at com.jfinal.upload.MultipartRequest.<init>(MultipartRequest.java:68)
+	at com.jfinal.core.Controller.getFiles(Controller.java:868)
+	at com.jfinal.core.Controller.getFile(Controller.java:878)
+	at oily.top.controller.AdminController.uploadImage(AdminController.java:321)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:97)
+	... 36 more
+2026-05-18 19:56:46 [qtp458209687-15] ERROR ActionHandler - oily.top.controller.AdminController.uploadImage() : /admin/uploadImage
+java.lang.RuntimeException: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:107)
+	at oily.top.interceptor.SeoInterceptor.intercept(SeoInterceptor.java:24)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:91)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:88)
+	at oily.top.common.AppConfig$1.handle(AppConfig.java:306)
+	at oily.top.handler.SeoHandler.handle(SeoHandler.java:75)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:90)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.Server.handle(Server.java:503)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.upload.MultipartRequest.wrapMultipartRequest(MultipartRequest.java:107)
+	at com.jfinal.upload.MultipartRequest.<init>(MultipartRequest.java:68)
+	at com.jfinal.core.Controller.getFiles(Controller.java:868)
+	at com.jfinal.core.Controller.getFile(Controller.java:878)
+	at oily.top.controller.AdminController.uploadImage(AdminController.java:321)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:97)
+	... 36 more
+2026-05-18 19:56:46 [qtp458209687-17] ERROR ActionHandler - oily.top.controller.AdminController.uploadImage() : /admin/uploadImage
+java.lang.RuntimeException: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:107)
+	at oily.top.interceptor.SeoInterceptor.intercept(SeoInterceptor.java:24)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:91)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:88)
+	at oily.top.common.AppConfig$1.handle(AppConfig.java:306)
+	at oily.top.handler.SeoHandler.handle(SeoHandler.java:75)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:90)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.Server.handle(Server.java:503)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produce(EatWhatYouKill.java:132)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.upload.MultipartRequest.wrapMultipartRequest(MultipartRequest.java:107)
+	at com.jfinal.upload.MultipartRequest.<init>(MultipartRequest.java:68)
+	at com.jfinal.core.Controller.getFiles(Controller.java:868)
+	at com.jfinal.core.Controller.getFile(Controller.java:878)
+	at oily.top.controller.AdminController.uploadImage(AdminController.java:321)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:97)
+	... 35 more
+2026-05-18 20:12:16 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 20:15:13 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 20:15:37 [qtp458209687-16] INFO  ActionHandler - 404 Action Not Found: /manager/text/
+2026-05-18 20:15:37 [qtp458209687-13] INFO  ActionHandler - 404 Action Not Found: /manager/text/
+2026-05-18 20:16:51 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 20:16:51 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 20:25:12 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 20:41:28 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 20:55:17 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 20:59:36 [qtp458209687-18] ERROR ActionHandler - oily.top.controller.AdminController.uploadImage() : /admin/uploadImage
+java.lang.RuntimeException: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:107)
+	at oily.top.interceptor.SeoInterceptor.intercept(SeoInterceptor.java:24)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:91)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:88)
+	at oily.top.common.AppConfig$1.handle(AppConfig.java:306)
+	at oily.top.handler.SeoHandler.handle(SeoHandler.java:75)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:90)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.Server.handle(Server.java:503)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:126)
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:366)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.upload.MultipartRequest.wrapMultipartRequest(MultipartRequest.java:107)
+	at com.jfinal.upload.MultipartRequest.<init>(MultipartRequest.java:68)
+	at com.jfinal.core.Controller.getFiles(Controller.java:868)
+	at com.jfinal.core.Controller.getFile(Controller.java:878)
+	at oily.top.controller.AdminController.uploadImage(AdminController.java:321)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:97)
+	... 36 more
+2026-05-18 20:59:36 [qtp458209687-15] ERROR ActionHandler - oily.top.controller.AdminController.uploadImage() : /admin/uploadImage
+java.lang.RuntimeException: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:107)
+	at oily.top.interceptor.SeoInterceptor.intercept(SeoInterceptor.java:24)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:91)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:88)
+	at oily.top.common.AppConfig$1.handle(AppConfig.java:306)
+	at oily.top.handler.SeoHandler.handle(SeoHandler.java:75)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:90)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1634)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:533)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:146)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:548)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:257)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1595)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:255)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1340)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:203)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:473)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1564)
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:201)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1242)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:144)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132)
+	at org.eclipse.jetty.server.Server.handle(Server.java:503)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:364)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:260)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:305)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:103)
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:118)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:333)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:310)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:168)
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produce(EatWhatYouKill.java:132)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:765)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:683)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.lang.NoSuchMethodError: com.oreilly.servlet.MultipartRequest.<init>(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;JLjava/lang/String;Lcom/oreilly/servlet/multipart/FileRenamePolicy;)V
+	at com.jfinal.upload.MultipartRequest.wrapMultipartRequest(MultipartRequest.java:107)
+	at com.jfinal.upload.MultipartRequest.<init>(MultipartRequest.java:68)
+	at com.jfinal.core.Controller.getFiles(Controller.java:868)
+	at com.jfinal.core.Controller.getFile(Controller.java:878)
+	at oily.top.controller.AdminController.uploadImage(AdminController.java:321)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:97)
+	... 35 more
+2026-05-18 21:13:03 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:13:04 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:13:22 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:13:53 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:13:53 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:14:11 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:15:37 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:15:37 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:15:56 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:20:39 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:20:39 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:20:58 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:20:58 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:20:58 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:21:16 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:23:05 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 21:56:15 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 21:56:15 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 21:56:34 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 22:00:37 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 22:00:37 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 22:00:55 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 22:00:55 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 22:00:55 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
+2026-05-18 22:17:44 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 22:33:00 [main] ERROR LogKit - Properties file not found in classpath: config-dev.txt
+java.lang.IllegalArgumentException: Properties file not found in classpath: config-dev.txt
+	at com.jfinal.kit.Prop.<init>(Prop.java:67)
+	at com.jfinal.kit.PropKit.use(PropKit.java:79)
+	at oily.top.common.AppConfig.configConstant(AppConfig.java:41)
+	at com.jfinal.core.Config.configJFinal(Config.java:51)
+	at com.jfinal.core.JFinal.init(JFinal.java:61)
+	at com.jfinal.core.JFinalFilter.init(JFinalFilter.java:64)
+	at org.eclipse.jetty.servlet.FilterHolder.initialize(FilterHolder.java:139)
+	at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:741)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:374)
+	at org.eclipse.jetty.webapp.WebAppContext.startWebapp(WebAppContext.java:1497)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1459)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:847)
+	at org.eclipse.jetty.servlet.ServletContextHandler.doStart(ServletContextHandler.java:287)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:545)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.start(ContainerLifeCycle.java:138)
+	at org.eclipse.jetty.server.Server.start(Server.java:416)
+	at org.eclipse.jetty.util.component.ContainerLifeCycle.doStart(ContainerLifeCycle.java:108)
+	at org.eclipse.jetty.server.handler.AbstractHandler.doStart(AbstractHandler.java:113)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:383)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:68)
+	at com.jfinal.server.jetty.JettyServer.doStart(JettyServer.java:154)
+	at com.jfinal.server.jetty.JettyServer.start(JettyServer.java:70)
+	at com.jfinal.core.JFinal.start(JFinal.java:165)
+	at oily.top.BlogStart.main(BlogStart.java:12)
+2026-05-18 22:33:53 [main] INFO  DruidDataSource - {dataSource-1} inited
+2026-05-18 22:36:23 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closing ...
+2026-05-18 22:36:23 [JFinal-Scanner] INFO  DruidDataSource - {dataSource-1} closed
