@@ -120,7 +120,7 @@
                         <version>3.3.2</version>
                         <configuration>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
-                            打包时排除 jetty 相关 JAR 
+                            <!--打包时排除 jetty 相关 JAR--> 
                             <packagingExcludes>
                                 WEB-INF/lib/jetty-server-*.jar,
                                 WEB-INF/lib/javax.servlet-api-*.jar

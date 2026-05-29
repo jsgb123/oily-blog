@@ -9,6 +9,8 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -203,11 +205,21 @@ public class AdminController extends Controller {
 
         int id = getParaToInt(0);
         Article article = Article.dao.findById(id);
+
+        String sql = "SELECT CONTENT FROM ARTICLE WHERE ID = ?";
+        String content = (String) Db.execute(conn -> {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("CONTENT") : "";
+            }
+        });
+
         if (article == null) {
             redirect("/admin/articles");
             return;
         }
-
+        article.set("CONTENT", content);
         setAttr("article", article);
         setAttr("categories", Category.dao.getAllCategories());
         render("admin/edit.html");
@@ -309,82 +321,84 @@ public class AdminController extends Controller {
      * 上传图片
      */
     public void uploadImage() {
-    if (!isLogin()) return;
-    
-    Map<String, Object> result = new HashMap<>();
-    
-    try {
-        // 检查是否是文件上传请求
-        if (!ServletFileUpload.isMultipartContent(getRequest())) {
-            result.put("success", false);
-            result.put("message", "无效的请求");
-            renderJson(result);
+        if (!isLogin()) {
             return;
         }
-        
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        upload.setFileSizeMax(2 * 1024 * 1024); // 2MB
-        
-        List<FileItem> items = upload.parseRequest(getRequest());
-        
-        for (FileItem item : items) {
-            if (!item.isFormField() && "image".equals(item.getFieldName())) {
-                String fileName = item.getName();
-                if (fileName == null || fileName.isEmpty()) {
-                    continue;
-                }
-                
-                // 获取文件扩展名
-                String fileExt = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
-                
-                // 检查文件类型
-                String[] allowedExt = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"};
-                boolean isValid = false;
-                for (String ext : allowedExt) {
-                    if (fileExt.equals(ext)) {
-                        isValid = true;
-                        break;
-                    }
-                }
-                
-                if (!isValid) {
-                    result.put("success", false);
-                    result.put("message", "只支持图片格式：jpg, png, gif, webp, bmp");
-                    renderJson(result);
-                    return;
-                }
-                
-                // 保存文件
-                String uploadPath = PropKit.get("uploadPath")+("/uploads/images");
-                File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdirs();
-                }
-                
-                String newFileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + fileExt;
-                File newFile = new File(uploadDir, newFileName);
-                item.write(newFile);
-                
-                String url = "/uploads/images/" + newFileName;
-                result.put("success", true);
-                result.put("url", url);
+
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            // 检查是否是文件上传请求
+            if (!ServletFileUpload.isMultipartContent(getRequest())) {
+                result.put("success", false);
+                result.put("message", "无效的请求");
                 renderJson(result);
                 return;
             }
+
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+            ServletFileUpload upload = new ServletFileUpload(factory);
+            upload.setFileSizeMax(2 * 1024 * 1024); // 2MB
+
+            List<FileItem> items = upload.parseRequest(getRequest());
+
+            for (FileItem item : items) {
+                if (!item.isFormField() && "image".equals(item.getFieldName())) {
+                    String fileName = item.getName();
+                    if (fileName == null || fileName.isEmpty()) {
+                        continue;
+                    }
+
+                    // 获取文件扩展名
+                    String fileExt = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
+
+                    // 检查文件类型
+                    String[] allowedExt = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp"};
+                    boolean isValid = false;
+                    for (String ext : allowedExt) {
+                        if (fileExt.equals(ext)) {
+                            isValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!isValid) {
+                        result.put("success", false);
+                        result.put("message", "只支持图片格式：jpg, png, gif, webp, bmp");
+                        renderJson(result);
+                        return;
+                    }
+
+                    // 保存文件
+                    String uploadPath = PropKit.get("uploadPath") + ("/uploads/images");
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
+
+                    String newFileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8) + fileExt;
+                    File newFile = new File(uploadDir, newFileName);
+                    item.write(newFile);
+
+                    String url = "/uploads/images/" + newFileName;
+                    result.put("success", true);
+                    result.put("url", url);
+                    renderJson(result);
+                    return;
+                }
+            }
+
+            result.put("success", false);
+            result.put("message", "请选择图片文件");
+            renderJson(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("success", false);
+            result.put("message", e.getMessage());
+            renderJson(result);
         }
-        
-        result.put("success", false);
-        result.put("message", "请选择图片文件");
-        renderJson(result);
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-        result.put("success", false);
-        result.put("message", e.getMessage());
-        renderJson(result);
     }
-}
 
     /**
      * 分类管理

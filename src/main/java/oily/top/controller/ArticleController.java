@@ -5,6 +5,8 @@ import oily.top.model.Category;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import oily.top.util.MarkdownUtil;
 
@@ -27,7 +29,7 @@ public class ArticleController extends Controller {
 
         // 获取文章
         Article article = Article.dao.findFirst(
-                "SELECT * FROM ARTICLE WHERE SLUG = ? AND STATUS = 1", slug
+                "SELECT ID, TITLE, SLUG FROM ARTICLE WHERE SLUG = ? AND STATUS = 1", slug
         );
 
         if (article == null) {
@@ -35,8 +37,14 @@ public class ArticleController extends Controller {
             return;
         }
         String ctx = getRequest().getContextPath();
-//        jfinal在读取CONTENT_HTML长文本内容时候会出错误
-        String content = article.getStr("CONTENT");
+//        jfinal在读取长文本内容时候会出错误，采用此方式读取
+        String sql = "SELECT CONTENT FROM ARTICLE WHERE ID = " + article.getInt("ID");
+        String content = (String) Db.execute(conn -> {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            return rs.next() ? rs.getString("CONTENT") : null;
+        });
+
         if (content != null && content.trim().length() > 0) {
             String html = MarkdownUtil.toHtml(content);
 
@@ -127,8 +135,8 @@ public class ArticleController extends Controller {
             return;
         }
 
-            System.out.println("oily.top.controller.ArticleController.tag()"+tag);
-            
+        System.out.println("oily.top.controller.ArticleController.tag()" + tag);
+
         // 设置SEO信息
         setAttr("seo_title", tag + " - 标签 -奥利顶 Oily Blog");
         setAttr("seo_keywords", tag);
