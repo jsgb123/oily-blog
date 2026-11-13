@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>http://www.oily.top/</loc>
+        <loc>https://www.oily.top/</loc>
         <lastmod>#date(now, "yyyy-MM-dd")</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     #for(article : articles)
     <url>
-        <loc>http://www.oily.top/article/#(article.SLUG)</loc>
+        <loc>https://www.oily.top/article/#(article.SLUG)</loc>
         <lastmod>#date(article.CREATE_TIME, "yyyy-MM-dd")</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
@@ -16,7 +16,7 @@
     #end
     #for(cate : categories)
     <url>
-        <loc>http://www.oily.top/c/#(cate.SLUG)</loc>
+        <loc>https://www.oily.top/c/#(cate.SLUG)</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

@@ -36,9 +36,9 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants me) {
         // 自动检测环境
-    String env = detectEnvironment();
-        System.out.println("oily.top.common.AppConfig.configConstant()"+env);
-    String configFile = "config_" + env + ".txt";
+        String env = detectEnvironment();
+        System.out.println("oily.top.common.AppConfig.configConstant()" + env);
+        String configFile = "config_" + env + ".txt";
         PropKit.use(configFile, "UTF-8");
         me.setDevMode(PropKit.getBoolean("devMode", true));
         me.setViewType(ViewType.JFINAL_TEMPLATE);
@@ -84,7 +84,7 @@ public class AppConfig extends JFinalConfig {
     @Override
     public void configRoute(Routes me) {
         me.add("/", IndexController.class, "view");
-me.add("/*.html", IndexController.class);
+        me.add("/*.html", IndexController.class);
         me.add("/admin", AdminController.class, "view");
         me.add("/article", ArticleController.class, "view");
     }

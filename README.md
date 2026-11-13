@@ -9,7 +9,7 @@ Oily Blog 是一款轻量级、SEO友好的Java博客系统。它基于 JFinal 4
 ## 开源地址
 
 - GitHub：[https://github.com/jsgb123/oily-blog](https://github.com/jsgb123/oily-blog)
-- 演示站：[http://www.oily.top](http://www.oily.top)
+- 演示站：[http://www.ujcode.com](http://www.ujcode.com)
 
 ## 后台管理
 
@@ -127,7 +127,7 @@ password=
 <img width="125" height="125" alt="qrcode_for_bytecode" src="https://github.com/user-attachments/assets/512f3798-ebfb-48c2-8c0d-5bf7575e55ea" />
 
 - 作者：奥利顶
-- 官网：[http://www.oily.top](http://www.oily.top)
+- 官网：[http://www.ujcode.com](http://www.ujcode.com)
 - GitHub：[https://github.com/jsgb123/oily-blog](https://github.com/jsgb123/oily-blog)
 
 ## 后续计划
